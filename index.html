@@ -2,35 +2,12 @@
 <html>
 <head>
     <title>Excel to Table</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
 </head>
 <body>
-    <table border="1" id="myTable"></table>
+    <table id="excelTable" border="1"></table>
 
-    <script>
-        var url = 'data.xlsx'; // Relative URL to data.xlsx in the same folder
-        var req = new XMLHttpRequest();
-        req.open("GET", url, true);
-        req.responseType = "arraybuffer";
-        req.onload = function(e) {
-            var data = new Uint8Array(req.response);
-            var workbook = XLSX.read(data, { type: 'array' });
-            var sheet_name_list = workbook.SheetNames;
-            var sheet = workbook.Sheets[sheet_name_list[0]];
-            var table = document.getElementById("myTable");
-
-            for (var row in sheet) {
-                if (row[0] === '!') continue;
-                var newRow = table.insertRow();
-                for (var col in sheet[row]) {
-                    if (!isNaN(col)) {
-                        var newCell = newRow.insertCell();
-                        newCell.textContent = sheet[row][col].w;
-                    }
-                }
-            }
-        };
-        req.send();
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
