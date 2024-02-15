@@ -3,6 +3,24 @@
 
   <head>
 
-    <title>Hi</title>
+    <title>Price Compare</title>
   </head>
+  <body>
+    <h1>Comparison table</h1>
+    <table border="1" id="compareTable"></table>
+    <script>
+      // Get a reference to the table element
+      var table = document.getElementById("myTable");
+
+      // Create table rows and cells using nested loops
+      for (var i = 1; i <= 5; i++) {
+          var row = table.insertRow();
+          for (var j = 1; j <= 4; j++) {
+              var cell = row.insertCell();
+              cell.textContent = "Row " + i + ", Cell " + j;
+          }
+      }
+  </script>
+
+  </body>
 </html>
