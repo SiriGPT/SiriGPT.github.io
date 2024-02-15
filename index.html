@@ -8,36 +8,29 @@
     <table border="1" id="myTable"></table>
 
     <script>
-        // Function to handle file input change event
-        function handleFile(e) {
-            var files = e.target.files;
-            var f = files[0];
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                var data = new Uint8Array(e.target.result);
-                var workbook = XLSX.read(data, { type: 'array' });
-                var sheet_name_list = workbook.SheetNames;
-                var sheet = workbook.Sheets[sheet_name_list[0]];
-                var table = document.getElementById("myTable");
+        var url = 'data.xlsx';
+        var req = new XMLHttpRequest();
+        req.open("GET", url, true);
+        req.responseType = "arraybuffer";
+        req.onload = function(e) {
+            var data = new Uint8Array(req.response);
+            var workbook = XLSX.read(data, { type: 'array' });
+            var sheet_name_list = workbook.SheetNames;
+            var sheet = workbook.Sheets[sheet_name_list[0]];
+            var table = document.getElementById("myTable");
 
-                for (var row in sheet) {
-                    if (row[0] === '!') continue;
-                    var newRow = table.insertRow();
-                    for (var col in sheet[row]) {
-                        if (!isNaN(col)) {
-                            var newCell = newRow.insertCell();
-                            newCell.textContent = sheet[row][col].w;
-                        }
+            for (var row in sheet) {
+                if (row[0] === '!') continue;
+                var newRow = table.insertRow();
+                for (var col in sheet[row]) {
+                    if (!isNaN(col)) {
+                        var newCell = newRow.insertCell();
+                        newCell.textContent = sheet[row][col].w;
                     }
                 }
-            };
-            reader.readAsArrayBuffer(f);
-        }
-
-        // Add event listener to file input
-        document.getElementById('fileInput').addEventListener('change', handleFile, false);
+            }
+        };
+        req.send();
     </script>
-
-    <input type="file" id="fileInput">
 </body>
 </html>
