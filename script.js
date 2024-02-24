@@ -19,8 +19,11 @@ $(document).ready(function () {
             parsedData.forEach(function (row) {
                 var dataRow = table.insertRow();
                 headers.forEach(function (header) {
-                    var cell = dataRow.insertCell();
-                    cell.textContent = row[header];
+                    if (row[header] != ""){
+                        var cell = dataRow.insertCell();
+                        cell.textContent = row[header];       
+                    }
+
                 });
             });
         }
